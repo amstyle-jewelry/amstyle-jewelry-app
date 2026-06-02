@@ -1,12 +1,24 @@
 import streamlit as st
+import pandas as pd
 
-st.set_page_config(page_title="A.m Style Jewelry", page_icon="✨", layout="centered")
+# Sheet ki URL yahan paste karein
+SHEET_ID = "YOUR_GOOGLE_SHEET_ID_HERE"
+SHEET_NAME = "Sheet1"
+URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={SHEET_NAME}"
 
-st.title("✨ A.m Style Jewelry ✨")
-st.subheader("Premium Gold & Silver Jewelry Wholesaler")
+# Data load karein
+def load_data():
+    return pd.read_csv(URL)
 
-st.markdown("---")
-st.write("Welcome to A.m Style! We provide high-quality, elegant jewelry pieces crafted with perfection.")
+st.title("Jewelry Store: Live from Google Sheets")
 
-# Contact Section
-st.info("Contact us on WhatsApp or check our LinkedIn for professional inquiries.")
+# Data display
+data = load_data()
+
+col1, col2, col3 = st.columns(3)
+for index, row in data.iterrows():
+    with [col1, col2, col3][index % 3]:
+        st.subheader(row['Product Name'])
+        st.write(f"Price: {row['Price']}")
+        st.markdown(f"[Buy Now]({row['Affiliate_Link']})")
+      
