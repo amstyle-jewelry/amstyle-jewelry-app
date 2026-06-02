@@ -1,24 +1,21 @@
 import streamlit as st
-import pandas as pd
 
-# Sheet ki URL yahan paste karein
-SHEET_ID = "YOUR_GOOGLE_SHEET_ID_HERE"
-SHEET_NAME = "Sheet1"
-URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={SHEET_NAME}"
+st.set_page_config(page_title="Shahzeb Jewelry Catalog", layout="centered")
 
-# Data load karein
-def load_data():
-    return pd.read_csv(URL)
+st.title("💍 Shahzeb Premium Jewelry")
+st.write("Hamari latest jewelry collection dekhein aur WhatsApp par rabta karein.")
 
-st.title("Jewelry Store: Live from Google Sheets")
+# Inventory (Yahan aap apne products edit kar sakte hain)
+products = [
+    {"name": "Gold Ring 22K", "price": "PKR 50,000", "desc": "Pure gold with hallmark"},
+    {"name": "Silver Necklace", "price": "PKR 15,000", "desc": "Handcrafted silver"},
+    {"name": "Bridal Set", "price": "PKR 120,000", "desc": "Heavy gold work"}
+]
 
-# Data display
-data = load_data()
-
-col1, col2, col3 = st.columns(3)
-for index, row in data.iterrows():
-    with [col1, col2, col3][index % 3]:
-        st.subheader(row['Product Name'])
-        st.write(f"Price: {row['Price']}")
-        st.markdown(f"[Buy Now]({row['Affiliate_Link']})")
-      
+for p in products:
+    with st.container(border=True):
+        st.subheader(p['name'])
+        st.write(f"**Price:** {p['price']}")
+        st.write(f"**Details:** {p['desc']}")
+        # Direct WhatsApp Link
+        st.link_button("Order via WhatsApp", "https://wa.me/923XXXXXXXXXX") 
